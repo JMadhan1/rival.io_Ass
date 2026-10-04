@@ -21,7 +21,7 @@ Candidate: <b>J Madhan</b> · <a href="https://jmadhan.me">jmadhan.me</a> · jma
 - **Agent:** *PreFlight: Agent Readiness Auditor*. Paste any agent's config and it runs a deterministic **lint + secret scan** (a custom Python tool), a **simulated red-team** (an isolated sub-agent), an evidence-based **judgement**, and returns a **PASS / CONDITIONAL / FAIL / BLOCKED** verdict and a **patched prompt** (a second sub-agent).
 - **Workflow (bonus):** *PreFlight Gate*, 8 steps with 2 branches. Secrets short-circuit **before any LLM call**; a deterministic JS step fuses the scores; failing agents are auto-repaired.
 - **Platform features used:** custom Studio tool (Python 3.13), 2 sub-agents, memory file, persona + values, 3-level guardrails, ritual, workflow with Tool / IF / Agent / Code / Set Fields steps and a webhook trigger.
-- **Testing:** 5 agent cases (normal, strong, leaked secret, injection aimed at the auditor, out-of-scope), 2 workflow cases (one per branch), **21 automated checks** passing locally (10 tool unit tests, 5 workflow-logic tests, 6 Python↔JS parity checks).
+- **Testing:** 5 agent cases (normal, strong, leaked secret, injection aimed at the auditor, out-of-scope), 2 workflow cases (one per branch), **22 automated checks** passing locally (11 tool unit tests, 5 workflow-logic tests, 6 Python↔JS parity checks).
 - **Self-audit:** PreFlight audited its own prompt, found a missing refusal policy (80/100), and after the fix scored **90/100 (A)**. See §5.
 - **Live demo:** the same scoring engine runs in the browser, so you can audit any agent in 10 seconds (link on the cover).
 
@@ -207,6 +207,18 @@ The fix closed a misuse risk, not just a keyword gap. That's the point of the to
 - **Unit tests, Score Fuser (5):** a critical break forces FAIL, CONDITIONAL arithmetic, PASS, manipulation forces FAIL, parsing of fenced or chatty agent JSON.
 - **Parity (6):** the browser demo's JavaScript engine gives results identical to the Python CortexOne tool on every fixture (scores, checks, secrets, tampering, fixes).
 - **Bugs found by testing and fixed:** capability regexes missed plurals ("refunds"); secret line numbers were offset by the name and description lines; one API key was reported twice (overlapping detectors); redaction showed the key's last characters. All are fixed and covered by tests.
+
+
+## 5.3 What testing on CortexOne found (and what I changed)
+
+| Finding | Where | Action |
+|---|---|---|
+| The chat model skipped the lint tool and the Target Simulator, renamed the checks and miscomputed the red-team average | TC2, first run | Prompt v2: the tool call and sub-agent delegation are mandatory, the static score is the tool's number, and the arithmetic must be shown. The re-run gave PASS 95 with the tool's exact 88 |
+| The tamper detector flagged PreFlight's own prompt, because it quotes attack phrases as examples | Self-audit | Quoted examples with a cue such as "e.g." are skipped; real attacks are still caught. A regression test was added and the JS and Python versions kept identical |
+| **Open issue:** the chat agent still repeats a leaked password in its advice, even after three prompt versions | TC3 | Prompt-only rules are guidance, not enforcement. The workflow solves it: a code check blocks secrets before any model sees the prompt (WF-2). On a platform level, an enforced "never echo flagged secrets" guardrail would close it |
+| The workflow's Code step could not read the lint result, so a first run scored 53 / FAIL | WF-1 | The agent now echoes `static_score` in its JSON. The re-run gave 74 / CONDITIONAL, matching the tool |
+| RivalBot returned a server error twice when asked to build the workflow | Workflow | Built every step by hand on the canvas |
+| Only DeepSeek V4 Flash was available on this account | Agent | Procedure adherence is the weak point, so critical logic lives in code (tool and Score Fuser), not in prose |
 
 {{file:submission/test_results.txt}}
 

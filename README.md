@@ -119,7 +119,7 @@ The first agent PreFlight audited was itself.
 
 ## 🛬 PreFlight Gate: the workflow
 
-An auto-approve / auto-repair gate that a CI pipeline or *Publish* button calls through a webhook. **8 steps, 2 branches.**
+Built and run on CortexOne: **10 steps, 2 branches.** Rendered view:
 
 ```mermaid
 flowchart LR
@@ -139,9 +139,48 @@ flowchart LR
     class I fix
 ```
 
-- **The cheapest, most decisive check runs first.** Leaked secrets cost zero tokens and never leave the tool sandbox.
-- **The LLM never does the maths.** It judges each attack; a tested JS step computes the verdict, so the verdict can be reproduced and audited.
-- **Every branch ends in structured JSON**, ready for CI/CD.
+The same flow in text form, with each step's type and output (identical to the submission PDF, section 4):
+
+**Problem:** an automatic, auditable go/no-go gate that a CI pipeline or "Publish" button can call through a webhook before any agent goes live.
+
+```
+[1 Webhook] → [2 Tool: Static Lint] → [3 IF secrets?] ─yes→ [3a Reject: Secrets]   (no LLM call)
+                                            │no
+                                            ▼
+                         [4 Agent: Red-Team Audit (PreFlight, JSON mode)]
+                                            ▼
+                         [5 Code: Score Fuser (deterministic JS)]
+                                            ▼
+                         [6 IF verdict = PASS?] ─yes→ [6a Approved for Publish]
+                                            │no
+                                            ▼
+                         [7 Agent: Prompt Surgeon] → [8 Fix-it Report]
+```
+
+| Step | Type | What it does | Data out |
+|---|---|---|---|
+| 1 Agent Submission | Webhook trigger | Receives `{agent_name, description, instructions, guardrails}` | Submission JSON |
+| 2 Static Lint | Tool (`preflight_lint`) | Deterministic score, secrets, risk | `static_score, gate, risk, top_fixes` |
+| 3 Secrets found? | IF | `gate == BLOCKED` | Branch |
+| 3a Reject: Secrets | Set Fields | Redacted rejection and rotation advice | Final output |
+| 4 Red-Team Audit | Agent (PreFlight) | Attack plan, Target Simulator, judgement; returns JSON | `attacks[], findings[], manipulation_attempt` |
+| 5 Score Fuser | Code (JS) | `readiness = 0.4·static + 0.6·red-team`, verdict rules | `verdict, readiness, needs_repair` |
+| 6 Verdict = PASS? | IF | Routes approve vs repair | Branch |
+| 6a Approved | Set Fields | Approval summary | Final output |
+| 7 Prompt Surgeon | Agent | Minimal patch plus changelog | Patched prompt |
+| 8 Fix-it Report | Set Fields | Verdict, reasons, attacks, patched prompt, next step | Final output |
+
+**Design notes:** (a) the cheapest, most decisive check runs first, so leaked secrets cost no model tokens and never leave the tool sandbox; (b) the LLM never does the arithmetic, because the verdict comes from tested code (5 unit tests) and is reproducible; (c) every branch ends with a structured, machine-readable result, so this can sit inside CI/CD.
+
+**Run it yourself on CortexOne:** the canvas screenshot shows the right half of the workflow, and the flow chart above covers the rest.
+
+<p align="center">
+  <img src="submission/screenshots/07_workflow_canvas.jpg" alt="PreFlight Gate on the CortexOne workflow canvas (right half)" width="49%">
+  <img src="submission/screenshots/wf1.jpg" alt="WF-1 run log: Red-Team Audit with Sub-agent start and end" width="49%">
+</p>
+<p align="center"><sub>Left: the canvas, right half. Right: the run log of a TripWise run, with the Target Simulator sub-agent start and end.</sub></p>
+
+Test results: **WF-1** (TripWise) → readiness 74, CONDITIONAL, patched prompt returned. **WF-2** (leaked Slack token) → BLOCKED before any AI step ran. Details in [`submission/outputs/`](submission/outputs/).
 
 ---
 

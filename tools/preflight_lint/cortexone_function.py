@@ -192,10 +192,25 @@ def _scan_pii(text: str) -> list:
     return [p for p in found if not (p["type"] == "phone" and (p["line"], p["redacted"]) in cards)]
 
 
+# A defensive prompt may quote attack phrases as examples ("e.g. 'ignore your rubric'"); that is not tampering.
+EXAMPLE_CUE = re.compile(r"\b(e\.g\.|such as|for example|for instance|do not comply|never follow|never obey)", re.IGNORECASE)
+
+
+def _is_quoted_example(text: str, start: int, end: int) -> bool:
+    line_start = text.rfind("\n", 0, start) + 1
+    line_end = text.find("\n", end)
+    line = text[line_start:line_end if line_end != -1 else len(text)]
+    before = text[line_start:start]
+    in_quotes = before.count('"') % 2 == 1 or before.count("“") > before.count("”")
+    return in_quotes and bool(EXAMPLE_CUE.search(line))
+
+
 def _scan_manipulation(text: str) -> list:
     found = []
     for pattern in MANIPULATION_PATTERNS:
         for m in re.finditer(pattern, text, flags=re.IGNORECASE):
+            if _is_quoted_example(text, m.start(), m.end()):
+                continue
             found.append({"evidence": m.group(0)[:80], "line": _line_of(text, m.start())})
     return sorted(found, key=lambda f: f["line"])
 

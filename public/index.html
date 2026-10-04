@@ -374,9 +374,23 @@ footer a { color: var(--ink); }
     return found.sort((a, b) => (a.field < b.field ? -1 : a.field > b.field ? 1 : a.line - b.line));
   }
 
+  // A defensive prompt may quote attack phrases as examples ("e.g. 'ignore your rubric'"); that is not tampering.
+  const EXAMPLE_CUE = /\b(e\.g\.|such as|for example|for instance|do not comply|never follow|never obey)/i;
+  function isQuotedExample(text, start, end) {
+    const ls = text.lastIndexOf("\n", start - 1) + 1;
+    let le = text.indexOf("\n", end); if (le === -1) le = text.length;
+    const before = text.slice(ls, start);
+    const count = (s, c) => s.split(c).length - 1;
+    const inQuotes = count(before, '"') % 2 === 1 || count(before, "“") > count(before, "”");
+    return inQuotes && EXAMPLE_CUE.test(text.slice(ls, le));
+  }
+
   function scanManipulation(text) {
     const out = [];
-    for (const re of MANIPULATION) for (const m of text.matchAll(re)) out.push({ evidence: m[0].slice(0, 80), line: lineOf(text, m.index) });
+    for (const re of MANIPULATION) for (const m of text.matchAll(re)) {
+      if (isQuotedExample(text, m.index, m.index + m[0].length)) continue;
+      out.push({ evidence: m[0].slice(0, 80), line: lineOf(text, m.index) });
+    }
     return out.sort((a, b) => a.line - b.line);
   }
 

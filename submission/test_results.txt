@@ -4,13 +4,14 @@ test_injection_bait_does_not_raise_score (__main__.PreflightLintTests.test_injec
 test_luhn_filters_fake_cards (__main__.PreflightLintTests.test_luhn_filters_fake_cards) ... ok
 test_missing_instructions_returns_400 (__main__.PreflightLintTests.test_missing_instructions_returns_400) ... ok
 test_no_false_manipulation_on_clean_prompts (__main__.PreflightLintTests.test_no_false_manipulation_on_clean_prompts) ... ok
+test_quoted_defensive_examples_are_not_tampering (__main__.PreflightLintTests.test_quoted_defensive_examples_are_not_tampering) ... ok
 test_secrets_block_and_are_never_echoed (__main__.PreflightLintTests.test_secrets_block_and_are_never_echoed) ... ok
 test_strong_prompt_clears (__main__.PreflightLintTests.test_strong_prompt_clears) ... ok
 test_weak_prompt_scores_low_and_flags_risk (__main__.PreflightLintTests.test_weak_prompt_scores_low_and_flags_risk) ... ok
 test_webhook_string_body_is_parsed (__main__.PreflightLintTests.test_webhook_string_body_is_parsed) ... ok
 test_workflow_fixtures (__main__.PreflightLintTests.test_workflow_fixtures) ... ok
 ----------------------------------------------------------------------
-Ran 10 tests in 0.048s
+Ran 11 tests in 0.016s
 OK
 
 $ node workflow/score_fuser.test.js

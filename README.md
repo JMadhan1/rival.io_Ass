@@ -172,7 +172,7 @@ The same flow in text form, with each step's type and output (identical to the s
 
 **Design notes:** (a) the cheapest, most decisive check runs first, so leaked secrets cost no model tokens and never leave the tool sandbox; (b) the LLM never does the arithmetic, because the verdict comes from tested code (5 unit tests) and is reproducible; (c) every branch ends with a structured, machine-readable result, so this can sit inside CI/CD.
 
-**Run it yourself on CortexOne:** the canvas screenshot shows the right half of the workflow, and the flow chart above covers the rest.
+**Screenshots:** the canvas screenshot shows the right half of the workflow, and the flow chart above covers the rest.
 
 <p align="center">
   <img src="submission/screenshots/07_workflow_canvas.jpg" alt="PreFlight Gate on the CortexOne workflow canvas (right half)" width="49%">

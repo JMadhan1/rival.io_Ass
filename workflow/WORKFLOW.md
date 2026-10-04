@@ -26,7 +26,24 @@ and returns an approval, a rejection, or a fix-it report with a patched prompt.
 [7 Agent: Prompt Surgeon] ──▶ [8 Set Fields: Fix-it Report]
 ```
 
-## Step-by-step configuration
+## As built on CortexOne (4 Oct 2026)
+
+| # | Step (type) | Configuration actually used |
+|---|---|---|
+| 1 | Manual Trigger | Input JSON = a fixture from `tests/fixtures/` |
+| 2 | **Static Lint** (Tool) | `preflight_lint`, operation *Default*; fields bound to `{{$json.agent_name}}`, `{{$json.description}}`, `{{$json.guardrails}}`, `{{$json.instructions}}` |
+| 3 | **Secrets found?** (IF) | raw condition `$json.result.body.gate == "BLOCKED"` (the tool's body is nested under `result`) |
+| 3a | **Reject: Secrets** (Set Fields, true) | status, agent_name, static_score, redacted `secrets`, message · *Output only these fields* = on |
+| 4 | **Red-Team Audit** (Agent, false) | saved agent *PreFlight: Agent Readiness Auditor*, JSON-only "workflow mode" prompt with the static results and the submitted agent from `$node["Manual Trigger"]` |
+| 5 | **Score Fuser** (Code) | `workflow/score_fuser_cortexone.js` (sandboxed JS, "once for all items") |
+| 6 | **Verdict = PASS?** (IF) | raw condition `$json.verdict == "PASS"` |
+| 6a | **Approved for Publish** (Set Fields, true) | status APPROVED, verdict, readiness, calculation, summary |
+| 7 | **Prompt Surgeon** (Agent, false) | the same saved PreFlight agent in "REPAIR MODE", which delegates to its own Prompt Surgeon sub-agent. Sub-agents can't be referenced directly from a workflow, so this reuses the parent |
+| 8 | **Fix-it Report** (Set Fields) | status, readiness, calculation, reasons, attacks (from `$node["Score Fuser"]`), patched_prompt, next_step |
+
+Built by hand on the canvas: RivalBot's "build workflow" returned *"Something went wrong on our end"* twice.
+
+## Step-by-step configuration (original design)
 
 ### 1. Trigger: `Agent Submission`
 - Type: **Webhook** (for the demo you can also use **Manual Trigger** with the JSON input)

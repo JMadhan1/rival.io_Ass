@@ -60,6 +60,10 @@ def sub_shot(m):
     name, _, cap = m.group(1).partition("|")
     path = SUB / "screenshots" / name.strip()
     if not path.exists():
+        # Accept .jpg captures for a .png placeholder name.
+        alt = path.with_suffix(".jpg")
+        path = alt if alt.exists() else path
+    if not path.exists():
         return pending(f"screenshot {name.strip()} ({cap.strip()})")
     mime = "image/png" if path.suffix.lower() == ".png" else "image/jpeg"
     data = base64.b64encode(path.read_bytes()).decode()

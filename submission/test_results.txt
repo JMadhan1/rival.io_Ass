@@ -1,0 +1,25 @@
+$ python tests/test_preflight_lint.py
+test_deterministic (__main__.PreflightLintTests.test_deterministic) ... ok
+test_injection_bait_does_not_raise_score (__main__.PreflightLintTests.test_injection_bait_does_not_raise_score) ... ok
+test_luhn_filters_fake_cards (__main__.PreflightLintTests.test_luhn_filters_fake_cards) ... ok
+test_missing_instructions_returns_400 (__main__.PreflightLintTests.test_missing_instructions_returns_400) ... ok
+test_no_false_manipulation_on_clean_prompts (__main__.PreflightLintTests.test_no_false_manipulation_on_clean_prompts) ... ok
+test_secrets_block_and_are_never_echoed (__main__.PreflightLintTests.test_secrets_block_and_are_never_echoed) ... ok
+test_strong_prompt_clears (__main__.PreflightLintTests.test_strong_prompt_clears) ... ok
+test_weak_prompt_scores_low_and_flags_risk (__main__.PreflightLintTests.test_weak_prompt_scores_low_and_flags_risk) ... ok
+test_webhook_string_body_is_parsed (__main__.PreflightLintTests.test_webhook_string_body_is_parsed) ... ok
+test_workflow_fixtures (__main__.PreflightLintTests.test_workflow_fixtures) ... ok
+----------------------------------------------------------------------
+Ran 10 tests in 0.021s
+OK
+
+$ node workflow/score_fuser.test.js
+score_fuser: all 5 tests passed
+
+$ node demo/parity.test.js
+parity ok  tc1_weak_refund_bot.json                 0 REVIEW
+parity ok  tc2_strong_hr_agent.json                 88 CLEAR
+parity ok  tc3_leaked_secret_sql.json               29 BLOCKED
+parity ok  tc4_injection_in_audited_prompt.json     6 REVIEW
+parity ok  wf1_travel_agent_medium.json             34 REVIEW
+parity ok  wf2_leaked_slack_token.json              6 BLOCKED

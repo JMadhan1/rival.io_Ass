@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+.vercel/
+node_modules/
+.env*
+submission/PreFlight_Submission.html
+
+.vercel

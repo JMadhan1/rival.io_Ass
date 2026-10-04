@@ -153,6 +153,7 @@ textarea#guardrails { min-height: 74px; }
 .checklist.anim li { animation: tick .35s ease both; animation-delay: calc(var(--i) * 45ms); }
 @media (prefers-reduced-motion: reduce) { .checklist.anim li { animation: none; } #arc { transition: none !important; } }
 
+footer a { color: var(--ink); }
 footer { color: var(--muted); font-size: 13px; border-top: 1px solid var(--line); padding-top: 14px; display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
 @media (prefers-reduced-motion: reduce) { .bar i { transition: none; } }
 </style>
@@ -228,7 +229,7 @@ footer { color: var(--muted); font-size: 13px; border-top: 1px solid var(--line)
     <div class="stage"><span class="w">sub-agent</span><h3>Repair</h3><p>A Prompt Surgeon makes the smallest patch that closes every finding, with a changelog. Re-audit to see the before and after scores.</p></div>
   </section>
 
-  <footer><span>PreFlight · Rival.io Forward Developer assessment, October 2026</span><span class="mono">engine parity: Python tool ≡ JS demo, 6/6 fixtures</span></footer>
+  <footer><span>PreFlight · built by <a href="https://jmadhan.me">J Madhan</a> · Rival.io Forward Developer assessment, October 2026 · <a href="https://github.com/JMadhan1/rival.io_Ass">source</a></span><span class="mono">engine parity: Python tool ≡ JS demo, 6/6 fixtures</span></footer>
 </div>
 
 <script>

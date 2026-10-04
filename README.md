@@ -228,6 +228,6 @@ submission/               submission PDF + generator
 ---
 
 <p align="center">
-  <sub>Built for the <b>Rival.io Forward Developer</b> assessment · October 2026 · by <a href="https://github.com/JMadhan1">@JMadhan1</a></sub><br>
+  <sub>Built for the <b>Rival.io Forward Developer</b> assessment · October 2026 · by <b>J Madhan</b> · <a href="https://jmadhan.me">jmadhan.me</a> · <a href="https://github.com/JMadhan1">@JMadhan1</a></sub><br>
   <sub>Built with help from <b>Claude (Anthropic) · Claude Code / Opus 5.5</b> for research, drafting and scaffolding. The concept, design decisions, CortexOne configuration and testing are my own.</sub>
 </p>

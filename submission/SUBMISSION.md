@@ -5,7 +5,7 @@
 ## A readiness auditor for AI agents, built on CortexOne
 
 **Rival.io · Forward Developer · Practical Assessment**
-Candidate: [YOUR FULL NAME] · jmadhan.shotmoons@gmail.com · October 2026
+Candidate: <b>J Madhan</b> · <a href="https://jmadhan.me">jmadhan.me</a> · jmadhan.shotmoons@gmail.com · October 2026
 
 > Most agents are tested by the people who built them, so they get tested on the cases their builders expected.
 > PreFlight tests an agent *before* it reaches Rival's marketplace and returns a scored verdict, evidence and a patched prompt.
@@ -220,6 +220,7 @@ The fix closed a misuse risk, not just a keyword gap. That's the point of the to
 # 7. Tools, models & resources used (disclosure)
 
 - **Platform:** Rival CortexOne (agents, Studio tool, sub-agents, rituals, workflows). Research used Rival's public docs (docs.cortexone.rival.io), rival.io, and the assessment's reference video.
+- **Author:** J Madhan ([jmadhan.me](https://jmadhan.me)) · Live demo: [preflight-agent-auditor.vercel.app](https://preflight-agent-auditor.vercel.app) · Code: [github.com/JMadhan1/rival.io_Ass](https://github.com/JMadhan1/rival.io_Ass)
 - **AI assistance:** I used **Claude (Anthropic) through Claude Code, model Opus 5.5** to research the CortexOne docs, help draft prompts, scaffold the Python tool, JS step and unit tests, and format this document. I chose the concept and design, configured everything on CortexOne myself, ran all the tests, and reviewed every output.
 - **Local tooling:** Python 3.11 (`unittest`) and Node.js for the tests; Microsoft Edge headless to render this PDF. The live demo is a single static HTML page hosted as a Claude artifact.
 - **Source:** all code, prompts and fixtures are available on request.

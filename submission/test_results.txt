@@ -10,7 +10,7 @@ test_weak_prompt_scores_low_and_flags_risk (__main__.PreflightLintTests.test_wea
 test_webhook_string_body_is_parsed (__main__.PreflightLintTests.test_webhook_string_body_is_parsed) ... ok
 test_workflow_fixtures (__main__.PreflightLintTests.test_workflow_fixtures) ... ok
 ----------------------------------------------------------------------
-Ran 10 tests in 0.021s
+Ran 10 tests in 0.030s
 OK
 
 $ node workflow/score_fuser.test.js

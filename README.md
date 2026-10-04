@@ -3,10 +3,10 @@
 </p>
 
 <p align="center">
-  <a href="https://preflight-agent-auditor.vercel.app"><img alt="Live demo" src="https://img.shields.io/badge/live_demo-preflight--agent--auditor.vercel.app-f2b53a?style=for-the-badge&labelColor=0a0f18"></a>
-  <a href="https://cortexone.rival.io"><img alt="Built on Rival CortexOne" src="https://img.shields.io/badge/built_on-Rival_CortexOne-e5ebf4?style=for-the-badge&labelColor=0a0f18"></a>
-  <img alt="21 of 21 checks passing" src="https://img.shields.io/badge/checks-21%2F21_passing-4ade80?style=for-the-badge&labelColor=0a0f18">
-  <img alt="Python 3.13 tool" src="https://img.shields.io/badge/tool-Python_3.13-8b99ae?style=for-the-badge&labelColor=0a0f18">
+  <a href="https://preflight-agent-auditor.vercel.app"><img alt="Live demo" src="https://img.shields.io/badge/live_demo-preflight--agent--auditor.vercel.app-0a8fb8?style=for-the-badge&labelColor=04070d"></a>
+  <a href="https://cortexone.rival.io"><img alt="Built on Rival CortexOne" src="https://img.shields.io/badge/built_on-Rival_CortexOne-e5ebf4?style=for-the-badge&labelColor=04070d"></a>
+  <img alt="21 of 21 checks passing" src="https://img.shields.io/badge/checks-21%2F21_passing-3ee6a0?style=for-the-badge&labelColor=04070d">
+  <img alt="Python 3.13 tool" src="https://img.shields.io/badge/tool-Python_3.13-8b99ae?style=for-the-badge&labelColor=04070d">
 </p>
 
 <p align="center">
@@ -38,16 +38,9 @@ No sign-up and no API key. Each link opens the live demo with a sample agent loa
 
 Or paste your own agent's prompt. It re-scores as you type, and nothing leaves your browser.
 
-<table>
-<tr>
-<td width="50%"><img src="docs/demo-bait-light.png" alt="PreFlight catching auditor tampering (light mode)"></td>
-<td width="50%"><img src="docs/demo-leak-dark.png" alt="PreFlight grounding an agent with leaked credentials (dark mode)"></td>
-</tr>
-<tr>
-<td align="center"><sub>Hidden instructions aimed at the auditor, caught in code</sub></td>
-<td align="center"><sub>Leaked credentials ground the agent before any LLM call</sub></td>
-</tr>
-</table>
+<p align="center"><a href="https://preflight-agent-auditor.vercel.app/#bait"><img src="docs/v2-hero.png" alt="PreFlight live demo: animated radar background with audited agents flying as aircraft" width="100%"></a></p>
+<p align="center"><img src="docs/v2-full.png" alt="PreFlight grounding an agent with leaked credentials" width="100%"></p>
+<p align="center"><sub>Live radar: audited agents fly as aircraft and light up as the sweep passes. Leaked credentials ground the agent before any LLM call.</sub></p>
 
 ---
 
@@ -228,6 +221,5 @@ submission/               submission PDF + generator
 ---
 
 <p align="center">
-  <sub>Built for the <b>Rival.io Forward Developer</b> assessment · October 2026 · by <b>J Madhan</b> · <a href="https://jmadhan.me">jmadhan.me</a> · <a href="https://github.com/JMadhan1">@JMadhan1</a></sub><br>
-  <sub>Built with help from <b>Claude (Anthropic) · Claude Code / Opus 5.5</b> for research, drafting and scaffolding. The concept, design decisions, CortexOne configuration and testing are my own.</sub>
+  <sub>Built for the <b>Rival.io Forward Developer</b> assessment · October 2026 · by <b>J Madhan</b> · <a href="https://jmadhan.me">jmadhan.me</a> · <a href="https://github.com/JMadhan1">@JMadhan1</a></sub>
 </p>

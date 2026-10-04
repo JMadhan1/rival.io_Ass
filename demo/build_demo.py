@@ -31,7 +31,7 @@ HEAD = f"""<!doctype html>
 <meta property="og:title" content="PreFlight: AI agent readiness auditor">
 <meta property="og:description" content="{DESCRIPTION}">
 <meta property="og:type" content="website">
-<meta name="theme-color" content="#0a0f18">
+<meta name="theme-color" content="#edf2f7">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230e1726'/%3E%3Cpath d='M6 19l20-8-6 12-3-4-11 0z' fill='%23f2b53a'/%3E%3C/svg%3E">
 <style>body{{margin:0}} img{{max-width:100%}} [hidden]{{display:none!important}}</style>
 """
